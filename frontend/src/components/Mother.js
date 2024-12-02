@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '@mui/material';
 import {
-  Box, Button, Typography, Grid, Alert, Paper, IconButton, List, ListItem, ListItemText,
+  Box, Button,Checkbox, FormControlLabel, Typography, Grid, Alert, Paper, IconButton, List, ListItem, ListItemText,TextField
 } from '@mui/material';
 import {
   CalendarToday, Contacts, LocalDining, HealthAndSafety, Settings, Person, Notifications,
@@ -94,6 +94,57 @@ const MainTitle = styled(Typography)({
 });
 
 function Mother() {
+  const [profileData, setProfileData] = useState({
+    name:'',
+    age:'',
+    nid: '',
+    phone: '',
+    emergencyContact: '',
+    village: '',
+    upazilla: '',
+    postOffice: '',
+    district: '',
+    division: '',
+  });
+
+  const [MedicalHistoryData, setMedicalHistory] = useState({
+      inducedAbortion: '',
+      accidentalMiscarriage: '',
+      stillBirth:'',
+      neonatalDeath: '',
+      congenitalAbnormality: { count: '', description: '' },
+      pretermLabor: '',
+      caesareanSection: '',
+    });
+
+  const [isDiseaseDropdownOpen, setIsDiseaseDropdownOpen] = useState(false);
+  const [isSurgeryDropdownOpen, setIsSurgeryDropdownOpen] = useState(false);
+  const [selectedDiseases, setSelectedDiseases] = useState([]);
+  const [selectedPreviousSurgery, setSelectedPreviousSurgery] = useState([]);
+
+  const diseasesList = [
+    "Diabetes",
+    "Hypertension",
+    "Tuberculosis",
+    "Pyelonephritis",
+    "Thyroid Disorder",
+    "Cardiac Disease",
+    "Epilepsy",
+    "Viral Hepatitis",
+    "Preeclampsia",
+    "Anaemia",
+    "HIV",
+  ];
+
+  const surgeryList = [
+    "Myomectomy",
+    "complete perinatal tear",
+    "vesicovaginal fistula",
+    "stress incontinence",
+  ];
+
+  
+  
   const [activeOption, setActiveOption] = useState('profile');
   const [schedule, setSchedule] = useState([]);
   const [dietChart, setDietChart] = useState([]);
@@ -107,6 +158,13 @@ function Mother() {
     { week: 12, milestone: "First ultrasound completed!" },
     { week: 22, milestone: "Felt baby’s first movement!" },
   ]);
+
+
+const [formData, setFormData] = useState({
+  currentWeight: '',
+  weightChange: '',
+  nextMilestone: '',
+});
 
   const fetchWeightData = () => {
     // Mock API call to fetch weight data
@@ -142,6 +200,29 @@ function Mother() {
     ]);
   };
 
+
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    // Update the weightData state
+    setWeightData({
+      currentWeight: formData.currentWeight,
+      weightChange: formData.weightChange,
+      nextMilestone: formData.nextMilestone,
+    });
+  
+    // Optionally clear the form
+    setFormData({
+      currentWeight: '',
+      weightChange: '',
+      nextMilestone: '',
+    });
+  
+    // Provide user feedback
+    alert('Data updated successfully!');
+  };
+  
+
   const handleOptionClick = (option) => {
     setActiveOption(option);
     if (option === 'weight') fetchWeightData();
@@ -149,6 +230,59 @@ function Mother() {
     if (option === 'social') fetchPosts();
     if (option === 'vaccination') fetchVaccinationHistory();
   };
+
+
+  //Egula Saba korse
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData((prevData) => ({ ...prevData, [name]: value }));
+  };
+  
+  const handleProfileUpdate = () => {
+    // Mock API call or state update
+    console.log('Updated Profile Data:', profileData);
+    alert('Profile updated successfully!');
+  };
+
+  const handleMedicalHistory = (e) => {
+    const { name, value } = e.target;
+    setMedicalHistory((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleMedicalHistoryUpdate = () => {
+    // Mock API call or state update
+    console.log('Updated Profile Data:',MedicalHistoryData);
+    alert('Medical History updated successfully!');
+  };
+
+  const handleDiseaseChange = (disease) => {
+    setSelectedDiseases((prev) =>
+      prev.includes(disease)
+        ? prev.filter((item) => item !== disease)
+        : [...prev, disease]
+    );
+  };
+
+  const handleDiseaseOkClick = () => {
+    setIsDiseaseDropdownOpen(false);
+  };
+
+  const handlePreviousSurgeryChange = (surgery) => {
+    setSelectedPreviousSurgery((prev) =>
+      prev.includes(surgery)
+        ? prev.filter((item) => item !== surgery)
+        : [...prev, surgery]
+    );
+  };
+
+  const handlePreviousSurgeryOkClick = () => {
+    setIsSurgeryDropdownOpen(false);
+  };
+
+  
 
   return (
     <Container>
@@ -158,6 +292,10 @@ function Mother() {
           <SidebarItem onClick={() => handleOptionClick('profile')}>
             <Person sx={{ marginRight: '10px' }} />
             <ListItemText primary="Profile" />
+          </SidebarItem>
+          <SidebarItem onClick={() => handleOptionClick('medicalHistory')}>
+            <HealthAndSafety sx={{ marginRight: '10px' }} />
+            <ListItemText primary="Medical History" />
           </SidebarItem>
           <SidebarItem onClick={() => handleOptionClick('risk')}>
             <HealthAndSafety sx={{ marginRight: '10px' }} />
@@ -202,6 +340,7 @@ function Mother() {
       <ContentArea>
         <MainTitle>
           {activeOption === 'profile' ? 'Your Profile' :
+          activeOption ==='medicalHistory' ? 'Medical History' :
             activeOption === 'risk' ? 'Risk Analysis' :
               activeOption === 'schedule' ? 'Vaccination Schedule' :
                 activeOption === 'diet' ? 'Diet Chart' :
@@ -211,6 +350,313 @@ function Mother() {
                         activeOption === 'social' ? 'Social Community' :
                           activeOption === 'vaccination' ? 'Vaccination History' : 'Settings'}
         </MainTitle>
+
+      {activeOption === 'profile' && (
+  <Box>
+    <SectionTitle>Personal Information</SectionTitle>
+    <Paper sx={{ padding: '16px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', mb: 3 }}>
+      <Typography variant="h6" sx={{ mb: 2 }}>Basic Information</Typography>
+      <TextField
+        label="Name"
+        variant="outlined"
+        fullWidth
+        name="name"
+        value={profileData.name}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Age"
+        variant="outlined"
+        fullWidth
+        name="age"
+        value={profileData.age}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      
+      <TextField
+        label="NID"
+        variant="outlined"
+        fullWidth
+        name="nid"
+        value={profileData.nid}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Phone"
+        variant="outlined"
+        fullWidth
+        name="phone"
+        value={profileData.phone}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Emergency Contact"
+        variant="outlined"
+        fullWidth
+        name="emergencyContact"
+        value={profileData.emergencyContact}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+    </Paper>
+
+    <SectionTitle>Address Information</SectionTitle>
+    <Paper sx={{ padding: '16px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
+      <TextField
+        label="Village/Ward"
+        variant="outlined"
+        fullWidth
+        name="village"
+        value={profileData.village}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Upazilla"
+        variant="outlined"
+        fullWidth
+        name="upazilla"
+        value={profileData.upazilla}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Post Office"
+        variant="outlined"
+        fullWidth
+        name="postOffice"
+        value={profileData.postOffice}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="District"
+        variant="outlined"
+        fullWidth
+        name="district"
+        value={profileData.district}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        label="Division"
+        variant="outlined"
+        fullWidth
+        name="division"
+        value={profileData.division}
+        onChange={handleProfileChange}
+        sx={{ mb: 2 }}
+      />
+    </Paper>
+
+    <ButtonStyled variant="contained" onClick={handleProfileUpdate} sx={{ mt: 3 }}>
+      Update
+    </ButtonStyled>
+  </Box>
+)}
+
+{activeOption === 'medicalHistory' && (
+  <Box sx={{ padding: '16px' }}>
+      
+      <Paper sx={{ padding: '16px', mb: 3 }}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Reproductive History
+        </Typography>
+
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle1">Miscarriage History</Typography>
+          <TextField
+            label="Induced Abortion"
+            variant="outlined"
+            fullWidth
+            name="inducedAbortion"
+            value={MedicalHistoryData.inducedAbortion}
+            onChange={handleMedicalHistory}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Accidental Miscarriage"
+            variant="outlined"
+            fullWidth
+            name="accidentalMiscarriage"
+            value={MedicalHistoryData.accidentalMiscarriage}
+            onChange={handleMedicalHistory}
+          />
+        </Box>
+
+        <Box sx={{ mb: 2 }}>
+      <Typography variant="subtitle1">Previous Child History </Typography>
+        <TextField
+          label="Previous Neonatal Death Count"
+          variant="outlined"
+          fullWidth
+          name="neonatalDeath"
+          value={MedicalHistoryData.neonatalDeath}
+          onChange={handleMedicalHistory}
+          sx={{ mb: 2 }}
+        />
+          <TextField
+          label="Previous StillBirth Count"
+          variant="outlined"
+          fullWidth
+          name="stillBirth"
+          value={MedicalHistoryData.stillBirth}
+          onChange={handleMedicalHistory}
+          sx={{ mb: 2 }}
+        />
+        </Box>
+
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle1">Previous Baby with Congenital Abnormality</Typography>
+          <TextField
+            label="Count"
+            variant="outlined"
+            fullWidth
+            name="congenitalAbnormality.count"
+            value={MedicalHistoryData.congenitalAbnormality.count}
+            onChange={(e) =>
+              setMedicalHistory((prev) => ({
+                ...prev,
+                congenitalAbnormality: {
+                  ...prev.congenitalAbnormality,
+                  count: e.target.value,
+                },
+              }))
+            }
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Description"
+            variant="outlined"
+            fullWidth
+            name="congenitalAbnormality.description"
+            value={MedicalHistoryData.congenitalAbnormality.description}
+            onChange={(e) =>
+              setMedicalHistory((prev) => ({
+                ...prev,
+                congenitalAbnormality: {
+                  ...prev.congenitalAbnormality,
+                  description: e.target.value,
+                },
+              }))
+            }
+          />
+        </Box>
+        <Typography variant="subtitle1">Previous Labour history</Typography>
+        <TextField
+          label="Previous Preterm Labour"
+          variant="outlined"
+          fullWidth
+          name="pretermLabor"
+          value={MedicalHistoryData.pretermLabor}
+          onChange={handleMedicalHistory}
+          sx={{ mb: 2 }}
+        />
+
+        <TextField
+          label="Previous Caesarean Section"
+          variant="outlined"
+          fullWidth
+          name="caesareanSection"
+          value={MedicalHistoryData.caesareanSection}
+          onChange={handleMedicalHistory}
+        />
+
+<Typography variant="h6" sx={{ mb: 2 }}>Diseases</Typography>
+      <Button
+        variant="outlined"
+        onClick={() => setIsDiseaseDropdownOpen(!isDiseaseDropdownOpen)}
+        sx={{ mb: 2 }}
+      >
+        {isDiseaseDropdownOpen ? "Hide" : "Select Diseases"}
+      </Button>
+
+      {isDiseaseDropdownOpen && (
+        <Box sx={{ pl: 2, pt: 1 }}>
+          {diseasesList.map((disease, index) => (
+            <FormControlLabel
+              key={index}
+              control={
+                <Checkbox
+                  checked={selectedDiseases.includes(disease)}
+                  onChange={() => handleDiseaseChange(disease)}
+                />
+              }
+              label={disease}
+            />
+          ))}
+          <Button
+            variant="contained"
+            onClick={handleDiseaseOkClick}
+            sx={{ mt: 2 }}
+          >
+            OK
+          </Button>
+        </Box>
+      )}
+
+
+  {selectedDiseases.length > 0 && (
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="subtitle1">Selected Diseases:</Typography>
+          <Typography variant="body1">{selectedDiseases.join(", ")}</Typography>
+        </Box>
+      )}
+
+    
+
+    <Typography variant="h6" sx={{ mb: 2 }}>Previous Surgery History</Typography>
+      <Button
+        variant="outlined"
+        onClick={() => setIsSurgeryDropdownOpen(!isSurgeryDropdownOpen)}
+        sx={{ mb: 2 }}
+      >
+        {isSurgeryDropdownOpen ? "Hide" : "Select Previous Surgery"}
+      </Button>
+
+      {isSurgeryDropdownOpen && (
+        <Box sx={{ pl: 2, pt: 1 }}>
+          {surgeryList.map((surgery, index) => (
+            <FormControlLabel
+              key={index}
+              control={
+                <Checkbox
+                  checked={selectedPreviousSurgery.includes(surgery)}
+                  onChange={() => handlePreviousSurgeryChange(surgery)}
+                />
+              }
+              label={surgery}
+            />
+          ))}
+          <Button
+            variant="contained"
+            onClick={handlePreviousSurgeryOkClick}
+            sx={{ mt: 2 }}
+          >
+            OK
+          </Button>
+        </Box>
+      )}
+
+     {selectedPreviousSurgery.length > 0 && (
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="subtitle1">Selected Surgery:</Typography>
+          <Typography variant="body1">{selectedPreviousSurgery.join(", ")}</Typography>
+        </Box>
+      )}
+
+    </Paper>
+    <ButtonStyled variant="contained" onClick={handleMedicalHistoryUpdate} sx={{ mt: 3 }}>
+      Update
+    </ButtonStyled>
+    </Box>
+  )
+};
+
 
         {activeOption === 'weight' && (
           <Box sx={{ mb: 3 }}>
@@ -297,6 +743,9 @@ function Mother() {
             )}
           </Box>
         )}
+
+
+
       </ContentArea>
     </Container>
   );
