@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
     phone: {
-        type: String,
+        type: Number,
         required: true,
         unique: true,
         match: /^[0-9]{10,15}$/ // Validates phone number format

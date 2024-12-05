@@ -3,7 +3,7 @@ const UserHealthInfo = require('../Database/dietSchema');
 exports.getUserHealthInfo = async (req, res) => {
     //get profile info
     try{
-        const phone = req.body.nid;
+        const phone = req.body.phone;
 
         if(!phone)
         {
