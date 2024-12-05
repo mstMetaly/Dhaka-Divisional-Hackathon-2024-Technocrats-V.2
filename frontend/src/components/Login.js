@@ -52,14 +52,44 @@ function Login() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    if (password && phoneNumber) {
-        navigate('/mother');
+  const handleLogin = async () => {
+    if (!phoneNumber || !password) {
+      alert('Please fill out all fields');
+      return;
     }
-    else {
-      alert('Please enter both  Phone Number and password');
+  
+    const loginData = {
+      phone: phoneNumber,
+      password: password,
+    };
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        if (result.success) {
+          alert('Login successful');
+          navigate('/mother');
+        } else {
+          alert('Invalid credentials');
+        }
+      } else {
+        alert(`Error: ${result.message || 'Something went wrong'}`);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Failed to log in. Please try again.');
     }
   };
+  
 
 
   const handleSignUp = async () => {
@@ -99,10 +129,10 @@ function Login() {
         }
       } catch (error) {
         console.error('Error creating account:', error);
-        alert('Failed to create account. Please try again.');
+    
+    alert('Failed to create account. Please try again.');
       }
     };
-
 
   return (
     <Container>
