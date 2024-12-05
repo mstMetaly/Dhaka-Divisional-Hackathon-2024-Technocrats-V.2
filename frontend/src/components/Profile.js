@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Paper, Typography, TextField } from '@mui/material';
+import { Paper, Typography, TextField,Button } from '@mui/material';
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
     name: '',
     age: '',
-    nid: '',
     phone: '',
     emergencyContact: '',
     village: '',
@@ -18,6 +17,36 @@ const Profile = () => {
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSaveUpdates = async () => {
+    // Validate that all fields are filled (optional)
+    if (Object.values(profileData).includes('')) {
+      alert('Please fill out all fields');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/profile/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(profileData), // Send profileData to backend
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Profile updated successfully');
+        // Optionally reset the form or update UI
+      } else {
+        alert(`Error: ${result.message || 'Something went wrong'}`);
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile. Please try again.');
+    }
   };
 
   return (
@@ -41,15 +70,6 @@ const Profile = () => {
           fullWidth
           name="age"
           value={profileData.age}
-          onChange={handleProfileChange}
-          sx={{ mb: 2 }}
-        />
-        <TextField
-          label="NID"
-          variant="outlined"
-          fullWidth
-          name="nid"
-          value={profileData.nid}
           onChange={handleProfileChange}
           sx={{ mb: 2 }}
         />
@@ -123,7 +143,30 @@ const Profile = () => {
           sx={{ mb: 2 }}
         />
       </Paper>
+      <Button
+  variant="contained"
+  color="primary"
+  onClick={handleSaveUpdates}
+  sx={{
+    fontWeight: 'bold', // Bold text
+    backgroundColor: '#1976d2', // Custom background color (Material UI blue)
+    padding: '10px 20px', // Padding for better spacing
+    borderRadius: '8px', // Rounded corners
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
+    transition: 'all 0.3s ease', // Smooth transition for hover effect
+    '&:hover': {
+      backgroundColor: '#1565c0', // Darker blue on hover
+      boxShadow: '0 6px 8px rgba(0, 0, 0, 0.2)', // Larger shadow on hover
+    },
+    '&:active': {
+      backgroundColor: '#0d47a1', // Even darker blue when clicked
+    },
+  }}
+>
+        Save Updates
+      </Button>
     </div>
+    
   );
 };
 
