@@ -4,6 +4,7 @@ import { Button, TextField, Box, Typography, Grid, Paper, Modal } from '@mui/mat
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../images/background.jpg';
 
+
 // Styled components
 const Container = styled(Box)(() => ({
   display: 'flex',
@@ -73,20 +74,12 @@ function Login() {
       });
   
       const result = await response.json();
-<<<<<<< HEAD
-      
-      if (response.status===200) {
-        console.log(response);
-          alert('Login successful');
-          navigate('/mother');
-        
-=======
   
       if (response.status === 200) {
+         localStorage.setItem('userPhone', phoneNumber);
           alert('Login successful');
           navigate('/mother');
   
->>>>>>> f05b1db5d433c07edf5c0f109d02e1ff3cc45e4a
       } else {
         alert(`Error: ${result.message || 'Something went wrong'}`);
       }

@@ -7,16 +7,22 @@ const ShowProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const phone = localStorage.getItem('userPhone');
 
   // Fetch profile data from the backend
   useEffect(() => {
-    const fetchProfileData = async () => {
+    const fetchProfileData = async () => {     
       try {
-        const response = await fetch('http://localhost:5000/api/profile/get');
-        if (!response.ok) {
-          throw new Error('Failed to fetch profile data');
-        }
-        const data = await response.json();
+        const response = await fetch("http://localhost:5000/api/profile/get", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ phone }),
+        });
+        const xml = await response.json();
+        const data = xml.data;
+        console.log(data);
         setProfileData(data);
         setLoading(false);
       } catch (err) {
