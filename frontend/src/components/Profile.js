@@ -49,7 +49,7 @@ const Profile = () => {
       console.log(response);
       if (response.ok) {
         alert('Profile updated successfully');
-        navigate('/ShowProfile');
+        navigate('/mother');
       } else {
         alert(`Error: ${result.message || 'Something went wrong'}`);
       }

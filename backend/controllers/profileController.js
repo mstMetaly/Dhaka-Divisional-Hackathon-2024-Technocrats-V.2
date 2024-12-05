@@ -34,25 +34,54 @@ exports.updateProfileInfo = async (req, res) => {
             return res.status(400).json({ success: false, error: 'Phone is required for updating the profile' });
         }
 
-        // Find the profile and update it
-        const updatedProfile = await UserProfile.findOneAndUpdate(
-            { phone }, // Filter: Find the document with this phone
-            {
-                $set: {
-                    name,
-                    age,
-                    phone,
-                    emergencyContact,
-                    village,
-                    upazilla,
-                    postOffice,
-                    district,
-                    division
-                }
-            },
-            { new: true, runValidators: true } // Options: Return the updated document and validate the changes
-        );
+        // // Find the profile and update it
+        // const updatedProfile = await UserProfile.findOneAndUpdate(
+        //     { phone }, // Filter: Find the document with this phone
+        //     {
+        //         $set: {
+        //             name,
+        //             age,
+        //             phone,
+        //             emergencyContact,
+        //             village,
+        //             upazilla,
+        //             postOffice,
+        //             district,
+        //             division
+        //         }
+        //     },
+        //     { new: true, runValidators: true } // Options: Return the updated document and validate the changes
+        // );
 
+        //newly added
+        // Filter out fields with null values
+       // Prepare the updated data by keeping existing values for null/undefined fields
+       const existingProfile = await UserProfile.findOne({ phone });
+       if (!existingProfile) {
+           return res.status(404).json({ success: false, error: 'No user found with the given phone number' });
+       }
+       console.log("existing: ", existingProfile);
+       const updatedData = {
+        name: name !== null && name !== undefined  && name != '' ? name : existingProfile.name,
+        age: age !== null && age !== undefined  && age != ''? age : existingProfile.age,
+        emergencyContact: emergencyContact !== null && emergencyContact !== undefined && emergencyContact!='' ? emergencyContact : existingProfile.emergencyContact,
+        village: village !== null && village !== undefined  && village != ''? village : existingProfile.village,
+        upazilla: upazilla !== null && upazilla !== undefined  && upazilla!=''? upazilla : existingProfile.upazilla,
+        postOffice: postOffice !== null && postOffice !== undefined && postOffice!=''? postOffice : existingProfile.postOffice,
+        district: district !== null && district !== undefined && district !=''? district : existingProfile.district,
+        division: division !== null && division !== undefined && division != '' ? division : existingProfile.division,
+    };
+
+    console.log("here u[dated]: ", updatedData);
+
+    // Update the profile with the prepared data
+    const updatedProfile = await UserProfile.findOneAndUpdate(
+        { phone }, // Filter: Find the document with this phone
+        { $set: updatedData }, // Update only non-null/undefined fields
+        { new: true, runValidators: true } // Options: Return the updated document and validate the changes
+    );
+
+//ended newly added
         if (!updatedProfile) {
             return res.status(404).json({ success: false, error: 'No user found with the given phone number' });
         }
