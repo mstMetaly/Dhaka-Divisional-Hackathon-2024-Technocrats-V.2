@@ -74,13 +74,10 @@ function Login() {
   
       const result = await response.json();
   
-      if (response.ok) {
-        if (result.success) {
+      if (response.status === 200) {
           alert('Login successful');
           navigate('/mother');
-        } else {
-          alert('Invalid credentials');
-        }
+  
       } else {
         alert(`Error: ${result.message || 'Something went wrong'}`);
       }

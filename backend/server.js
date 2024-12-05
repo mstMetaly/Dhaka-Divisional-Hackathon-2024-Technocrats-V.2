@@ -12,6 +12,7 @@ const connectDB = require('./Database/database');
 const signupRouter = require('./routes/signupRouter');
 const loginRouter = require('./routes/loginRouter');
 const dietRouter = require('./routes/dietRouter');
+const profileRouter = require('./routes/profileRouter');
 
 
 
@@ -35,6 +36,7 @@ connectDB();
 app.use('/api/signup', signupRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/diet', dietRouter);
+app.use('/api/profile', profileRouter);
 
 
 
