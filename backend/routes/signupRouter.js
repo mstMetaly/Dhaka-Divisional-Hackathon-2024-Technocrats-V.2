@@ -2,6 +2,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const {User, UserProfile} = require('../Database/models');
+const MedicalHistory = require('../Database/historySchema');
 
 
 const router = express.Router();
@@ -37,7 +38,12 @@ router.post('/', async (req, res) => {
             emergencyContact: phone, 
         });
 
+        const newHistory = new MedicalHistory({
+            phone
+        });
+
         console.log("sign up er age");
+        await newHistory.save();
         await newUser.save();
         await newProfile.save();
     

@@ -41,12 +41,13 @@ exports.updateProfileInfo = async (req, res) => {
                 $set: {
                     name,
                     age,
+                    phone,
                     emergencyContact,
-                    'address.village': village,
-                    'address.upazilla': upazilla,
-                    'address.postOffice': postOffice,
-                    'address.district': district,
-                    'address.division': division
+                    village,
+                    upazilla,
+                    postOffice,
+                    district,
+                    division
                 }
             },
             { new: true, runValidators: true } // Options: Return the updated document and validate the changes
