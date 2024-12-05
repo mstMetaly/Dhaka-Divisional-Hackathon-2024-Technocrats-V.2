@@ -1,7 +1,8 @@
 // routes/signupRoute.js
 const express = require('express');
 const bcrypt = require('bcrypt');
-const User = require('../Databse/models');
+const {User, UserProfile} = require('../Database/models');
+
 
 const router = express.Router();
 
@@ -31,7 +32,16 @@ router.post('/', async (req, res) => {
             password: hashedPassword
         });
 
+        //create user for userProfile
+        const newProfile = new UserProfile({
+            nid,
+            phone,
+            emergencyContact: phone, 
+        });
+
         await newUser.save();
+        await newProfile.save();
+    
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         console.error(error);
