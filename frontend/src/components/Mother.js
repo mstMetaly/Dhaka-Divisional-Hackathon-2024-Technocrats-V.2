@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { Person, HealthAndSafety, CalendarToday, LocalDining, Contacts, Settings, Notifications } from '@mui/icons-material';
-import Profile from './Profile'; // Import the Profile component
-import {MedicalHistory} from './MedicalHistory'; // Import the MedicalHistory component
+import {MedicalHistory} from './MedicalHistory'; 
+import {ShowProfile} from './ShowProfile';// Import the MedicalHistory component
 
 // Sidebar styles
 const Sidebar = {
@@ -100,7 +100,7 @@ const Mother = () => {
         </Typography>
 
         {/* Profile Section */}
-        {activeOption === 'profile' && <Profile />}
+        {activeOption === 'profile' && <ShowProfile />}
 
         {/* Medical History Section */}
         {activeOption === 'medicalHistory' && <MedicalHistory />}
