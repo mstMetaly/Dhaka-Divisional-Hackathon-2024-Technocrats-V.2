@@ -44,49 +44,65 @@ const SectionTitle = styled(Typography)(() => ({
 }));
 
 function Login() {
-  const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber,setphoneNumber] = useState('');
   const [openSignUp, setOpenSignUp] = useState(false);
   const [signUpPhone, setSignUpPhone] = useState('');
-  const [signUpNid, setSignUpNid] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (role && password && phoneNumber) {
-      if (role === 'mother') {
+    if (password && phoneNumber) {
         navigate('/mother');
-      } else if (role === 'worker') {
-        navigate('/health-worker');
-      } else if (role === 'official') {
-        navigate('/official-personnel');
-      } else {
-        alert('Invalid role selected');
-      }
-    } else {
-      alert('Please enter both role, Phone Number and password');
+    }
+    else {
+      alert('Please enter both  Phone Number and password');
     }
   };
 
-  const handleSignUp = () => {
-    if (!signUpPhone || !signUpNid || !signUpPassword || !confirmPassword) {
-      alert('Please fill out all fields');
-      return;
-    }
-    if (signUpPassword !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    alert('Successful account creation');
-    setOpenSignUp(false);
-    setSignUpPhone('');
-    setSignUpNid('');
-    setphoneNumber('');
-    setSignUpPassword('');
-    setConfirmPassword('');
-  };
+
+  const handleSignUp = async () => {
+      if (!signUpPhone || !signUpPassword ||!confirmPassword) {
+        alert('Please fill out all fields');
+        return;
+      }
+      if (signUpPassword !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+    
+      const userData = {
+        phone: signUpPhone,
+        password: signUpPassword,
+      };
+    
+      try {
+        const response = await fetch('http://localhost:5000/api/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+    
+        const result = await response.json();
+    
+        if (response.ok) {
+          alert('Successful account creation');
+          setOpenSignUp(false);
+          setSignUpPhone('');
+          setSignUpPassword('');
+          setConfirmPassword('');
+        } else {
+          alert(`Error: ${result.message ||'Something went wrong'}`);
+        }
+      } catch (error) {
+        console.error('Error creating account:', error);
+        alert('Failed to create account. Please try again.');
+      }
+    };
+
 
   return (
     <Container>
@@ -94,22 +110,6 @@ function Login() {
         <SectionTitle>Login</SectionTitle>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField
-              select
-              label="Select Role"
-              fullWidth
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              SelectProps={{
-                native: true,
-              }}
-              sx={{ mb: 2 }}
-            >
-              <option value="">Select Role</option>
-              <option value="mother">Mother</option>
-              <option value="worker">Health Worker</option>
-              <option value="official">Official Personnel</option>
-            </TextField>
             <TextField
               label="Phone Number"
               type="number"
@@ -164,13 +164,6 @@ function Login() {
             fullWidth
             value={signUpPhone}
             onChange={(e) => setSignUpPhone(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="NID Number"
-            fullWidth
-            value={signUpNid}
-            onChange={(e) => setSignUpNid(e.target.value)}
             sx={{ mb: 2 }}
           />
           <TextField
