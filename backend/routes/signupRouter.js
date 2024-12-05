@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
             emergencyContact: phone, 
         });
 
+        console.log("sign up er age");
         await newUser.save();
         await newProfile.save();
     

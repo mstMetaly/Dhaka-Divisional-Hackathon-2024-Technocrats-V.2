@@ -73,12 +73,20 @@ function Login() {
       });
   
       const result = await response.json();
+<<<<<<< HEAD
       
       if (response.status===200) {
         console.log(response);
           alert('Login successful');
           navigate('/mother');
         
+=======
+  
+      if (response.status === 200) {
+          alert('Login successful');
+          navigate('/mother');
+  
+>>>>>>> f05b1db5d433c07edf5c0f109d02e1ff3cc45e4a
       } else {
         alert(`Error: ${result.message || 'Something went wrong'}`);
       }

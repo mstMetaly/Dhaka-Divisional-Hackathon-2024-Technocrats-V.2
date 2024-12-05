@@ -6,8 +6,8 @@ const userSchema = new Schema({
     phone: {
         type: Number,
         required: true,
-        unique: true,
-        match: /^[0-9]{10,15}$/ // Validates phone number format
+        unique: true
+        // match: /^[0-9]{10,15}$/ // Validates phone number format
     },
     password: {
         type: String,
@@ -26,12 +26,12 @@ const userProfileSchema = new mongoose.Schema({
     min: 0
   },
   phone: {
-    type: Number,
-    match: [/^\d{10,15}$/, 'Please enter a valid phone number'], // Regex for phone numbers (10-15 digits)
+    type: Number
+   // match: [/^\d{10,15}$/, 'Please enter a valid phone number'], // Regex for phone numbers (10-15 digits)
   },
   emergencyContact: {
-    type: Number,
-    match: [/^\d{10,15}$/, 'Please enter a valid emergency contact number'], // Regex for phone numbers (10-15 digits)
+    type: Number
+    //match: [/^\d{10,15}$/, 'Please enter a valid emergency contact number'], // Regex for phone numbers (10-15 digits)
   },
   address: {
     village: {
