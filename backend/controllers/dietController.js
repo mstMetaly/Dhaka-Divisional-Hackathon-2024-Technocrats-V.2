@@ -3,14 +3,14 @@ const UserHealthInfo = require('../Database/dietSchema');
 exports.getUserHealthInfo = async (req, res) => {
     //get profile info
     try{
-        const nid = req.body.nid;
+        const phone = req.body.nid;
 
-        if(!nid)
+        if(!phone)
         {
-            return res.status(400).json({success: false, error:'NID is required'});
+            return res.status(400).json({success: false, error:'Phone is required'});
         }
     
-        const healthInfo = await UserHealthInfo.findOne({nid});
+        const healthInfo = await UserHealthInfo.findOne({phone});
     
         if(!healthInfo)
         {
@@ -30,22 +30,22 @@ exports.getUserHealthInfo = async (req, res) => {
 exports.insertUserHealthInfo = async (req, res) => {
     //update profile info
     try {
-        const { nid, height, weight, age, duration } = req.body;
+        const { phone, height, weight, age, duration } = req.body;
 
         // Validate required fields
-        if (!nid || height == null || weight == null || age == null || duration == null) {
+        if (!phone || height == null || weight == null || age == null || duration == null) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
         // Check if the NID is already in use
-        const existingUser = await UserHealthInfo.findOne({ nid });
+        const existingUser = await UserHealthInfo.findOne({ phone });
         if (existingUser) {
             return res.status(400).json({ message: 'NID already exists' });
         }
 
         // Create a new user health info document
         const userHealthInfo = new UserHealthInfo({
-            nid,
+            phone,
             height,
             weight,
             age,

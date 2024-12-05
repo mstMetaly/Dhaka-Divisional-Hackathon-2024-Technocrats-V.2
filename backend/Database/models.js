@@ -9,11 +9,6 @@ const userSchema = new Schema({
         unique: true,
         match: /^[0-9]{10,15}$/ // Validates phone number format
     },
-    nid: {
-        type: String,
-        required: true,
-        unique: true
-    },
     password: {
         type: String,
         required: true
@@ -29,11 +24,6 @@ const userProfileSchema = new mongoose.Schema({
   age: {
     type: Number,
     min: 0
-  },
-  nid: {
-    type: Number,
-    required: false,
-    unique: true
   },
   phone: {
     type: Number,

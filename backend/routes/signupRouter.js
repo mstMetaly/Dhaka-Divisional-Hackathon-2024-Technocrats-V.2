@@ -9,10 +9,10 @@ const router = express.Router();
 // Signup route
 router.post('/', async (req, res) => {
     try {
-        const { phone, nid, password } = req.body;
+        const { phone, password } = req.body;
 
         // Validate input
-        if (!phone || !nid || !password) {
+        if (!phone || !password) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
@@ -28,13 +28,11 @@ router.post('/', async (req, res) => {
         // Create a new user
         const newUser = new User({
             phone,
-            nid,
             password: hashedPassword
         });
 
         //create user for userProfile
         const newProfile = new UserProfile({
-            nid,
             phone,
             emergencyContact: phone, 
         });

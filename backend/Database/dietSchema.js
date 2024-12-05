@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 
 const userHealthInfoSchema = new Schema({
-    nid: {
+    phone: {
         type: Number,
         unique: true
       },
