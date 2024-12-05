@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Paper, Typography, TextField, FormControlLabel, Checkbox, Button } from '@mui/material';
+import { Paper, Box,Typography, TextField, FormControlLabel, Checkbox, Button, FormControl,FormLabel,RadioGroup,Radio} from '@mui/material';
 
-const MedicalHistory = () => {
+const MedicalHistory = () => { 
   const [medicalHistoryData, setMedicalHistory] = useState({
     inducedAbortion: '',
     accidentalMiscarriage: '',
@@ -53,6 +53,7 @@ const MedicalHistory = () => {
         : [...prev, disease]
     );
   };
+  
 
   const handleSurgeryChange = (surgery) => {
     setSelectedPreviousSurgery((prev) =>
@@ -62,65 +63,121 @@ const MedicalHistory = () => {
     );
   };
 
+
+  const handleDiseaseOkClick = () => {
+    setIsDiseaseDropdownOpen(false);
+  };
+
+  const handleSurgeryOkClick = () => {
+    setIsSurgeryDropdownOpen(false);
+  };
+  const handleSaveAndNavigate = () => {
+    localStorage.setItem('medicalHistory', JSON.stringify(medicalHistoryData));
+    localStorage.setItem('selectedDiseases', JSON.stringify(selectedDiseases));
+    localStorage.setItem('selectedPreviousSurgery', JSON.stringify(selectedPreviousSurgery));
+    
+  };
+
+
   return (
     <Paper sx={{ padding: '16px', mb: 3 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>
         Reproductive History
       </Typography>
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+  <FormControl component="fieldset" sx={{ mb: 2 }}>
+   <FormLabel component="legend">Induced Abortion</FormLabel>
+  <RadioGroup
+    row
+    name="inducedAbortion"
+    value={medicalHistoryData.inducedAbortion}
+    onChange={handleMedicalHistoryChange}
+   >
+    <FormControlLabel value="0" control={<Radio />} label="0" />
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+    <FormControlLabel value="moreThan3" control={<Radio />} label="More than 3" />
+    </RadioGroup>
+   </FormControl>
 
-      <TextField
-        label="Induced Abortion"
-        variant="outlined"
-        fullWidth
-        name="inducedAbortion"
-        value={medicalHistoryData.inducedAbortion}
-        onChange={handleMedicalHistoryChange}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        label="Accidental Miscarriage"
-        variant="outlined"
-        fullWidth
-        name="accidentalMiscarriage"
-        value={medicalHistoryData.accidentalMiscarriage}
-        onChange={handleMedicalHistoryChange}
-        sx={{ mb: 2 }}
-      />
+  <FormControl component="fieldset" sx={{ mb: 2 }}>
+   <FormLabel component="legend">Accidental Miscarriage</FormLabel>
+  <RadioGroup
+    row
+    name="accidentalMiscarriage"
+    value={medicalHistoryData.accidentalMiscarriage}
+    onChange={handleMedicalHistoryChange}
+   >
+    <FormControlLabel value="0" control={<Radio />} label="0" />
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+    <FormControlLabel value="moreThan3" control={<Radio />} label="More than 3" />
+    </RadioGroup>
+   </FormControl>
+   </Box>
 
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Previous Child History
-      </Typography>
-      <TextField
-        label="Previous Neonatal Death Count"
-        variant="outlined"
-        fullWidth
+  <Typography variant="h6" sx={{ mb: 2 }}>
+    Previous Child History
+  </Typography>
+
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <FormControl component="fieldset" sx={{ mb: 2 }}>
+      <FormLabel component="legend">Previous Neonatal Death</FormLabel>
+      <RadioGroup
+        row
         name="neonatalDeath"
         value={medicalHistoryData.neonatalDeath}
         onChange={handleMedicalHistoryChange}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        label="Previous Stillbirth Count"
-        variant="outlined"
-        fullWidth
-        name="stillBirth"
-        value={medicalHistoryData.stillBirth}
-        onChange={handleMedicalHistoryChange}
-        sx={{ mb: 2 }}
-      />
+      >
+    <FormControlLabel value="0" control={<Radio />} label="0" />
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+    <FormControlLabel value="moreThan3" control={<Radio />} label="More than 3" />
+    </RadioGroup>
+   </FormControl>
 
-      <Typography variant="h6" sx={{ mb: 2 }}>
+  <FormControl component="fieldset" sx={{ mb: 2 }}>
+   <FormLabel component="legend">Previous Stillbirth</FormLabel>
+  <RadioGroup
+    row
+    name="stillBirth"
+    value={medicalHistoryData.stillBirth}
+    onChange={handleMedicalHistoryChange}
+   >
+    <FormControlLabel value="0" control={<Radio />} label="0" />
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+    <FormControlLabel value="moreThan3" control={<Radio />} label="More than 3" />
+    </RadioGroup>
+   </FormControl>
+   </Box>
+
+    <Typography variant="h6" sx={{ mb: 2 }}>
         Previous Baby with Congenital Abnormality
-      </Typography>
-      <TextField
-        label="Count"
-        variant="outlined"
-        fullWidth
-        name="congenitalAbnormality.count"
+    </Typography>
+
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <FormControl component="fieldset" sx={{ mb: 2 }}>
+      <FormLabel component="legend">Abnormal Child Count</FormLabel>
+      <RadioGroup
+        row
+        name="abnormalChildCount"
         value={medicalHistoryData.congenitalAbnormality.count}
         onChange={handleMedicalHistoryChange}
-        sx={{ mb: 2 }}
-      />
+      >
+    <FormControlLabel value="0" control={<Radio />} label="0" />
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+    <FormControlLabel value="moreThan3" control={<Radio />} label="More than 3" />
+    </RadioGroup>
+   </FormControl>
+   </Box>
+
       <TextField
         label="Description"
         variant="outlined"
@@ -134,38 +191,52 @@ const MedicalHistory = () => {
       <Typography variant="h6" sx={{ mb: 2 }}>
         Previous Labour History
       </Typography>
-      <TextField
-        label="Previous Preterm Labour"
-        variant="outlined"
-        fullWidth
-        name="pretermLabor"
+
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <FormControl component="fieldset" sx={{ mb: 2 }}>
+      <FormLabel component="legend">Previous Preterm Labour</FormLabel>
+      <RadioGroup
+        row
+        name="pretermLabour"
         value={medicalHistoryData.pretermLabor}
         onChange={handleMedicalHistoryChange}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        label="Previous Caesarean Section"
-        variant="outlined"
-        fullWidth
-        name="caesareanSection"
-        value={medicalHistoryData.caesareanSection}
-        onChange={handleMedicalHistoryChange}
-        sx={{ mb: 2 }}
-      />
+      >
+    <FormControlLabel value="0" control={<Radio />} label="0" />
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+    <FormControlLabel value="moreThan3" control={<Radio />} label="More than 3" />
+    </RadioGroup>
+   </FormControl>
 
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Diseases
-      </Typography>
+  <FormControl component="fieldset" sx={{ mb: 2 }}>
+   <FormLabel component="legend">Previous Caesarean Section</FormLabel>
+  <RadioGroup
+    row
+    name="caesareanSection"
+    value={medicalHistoryData.caesareanSection}
+    onChange={handleMedicalHistoryChange}
+   >
+    <FormControlLabel value="0" control={<Radio />} label="0" />
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+    <FormControlLabel value="moreThan3" control={<Radio />} label="More than 3" />
+    </RadioGroup>
+   </FormControl>
+   </Box>
+
+<Typography variant="h6" sx={{ mb: 2 }}>Diseases</Typography>
       <Button
         variant="outlined"
         onClick={() => setIsDiseaseDropdownOpen(!isDiseaseDropdownOpen)}
         sx={{ mb: 2 }}
       >
-        {isDiseaseDropdownOpen ? 'Hide' : 'Select Diseases'}
+        {isDiseaseDropdownOpen ? "Hide" : "Select Diseases"}
       </Button>
 
       {isDiseaseDropdownOpen && (
-        <div>
+        <Box sx={{ pl: 2, pt: 1 }}>
           {diseasesList.map((disease, index) => (
             <FormControlLabel
               key={index}
@@ -178,22 +249,34 @@ const MedicalHistory = () => {
               label={disease}
             />
           ))}
-        </div>
+          <Button
+            variant="contained"
+            onClick={handleDiseaseOkClick}
+            sx={{ mt: 2 }}
+          >
+            OK
+          </Button>
+        </Box>
       )}
 
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Previous Surgery History
-      </Typography>
+      {selectedDiseases.length > 0 && (
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="subtitle1">Selected Diseases:</Typography>
+          <Typography variant="body1">{selectedDiseases.join(", ")}</Typography>
+        </Box>
+      )}
+
+<Typography variant="h6" sx={{ mb: 2 }}>Previous Surgery History</Typography>
       <Button
         variant="outlined"
         onClick={() => setIsSurgeryDropdownOpen(!isSurgeryDropdownOpen)}
         sx={{ mb: 2 }}
       >
-        {isSurgeryDropdownOpen ? 'Hide' : 'Select Previous Surgery'}
+        {isSurgeryDropdownOpen ? "Hide" : "Select Previous Surgery"}
       </Button>
 
       {isSurgeryDropdownOpen && (
-        <div>
+        <Box sx={{ pl: 2, pt: 1 }}>
           {surgeryList.map((surgery, index) => (
             <FormControlLabel
               key={index}
@@ -206,10 +289,84 @@ const MedicalHistory = () => {
               label={surgery}
             />
           ))}
-        </div>
+          <Button
+            variant="contained"
+            onClick={handleSurgeryOkClick}
+            sx={{ mt: 2 }}
+          >
+            OK
+          </Button>
+        </Box>
       )}
+
+      {selectedPreviousSurgery.length > 0 && (
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="subtitle1">Selected Previous Surgery:</Typography>
+          <Typography variant="body1">{selectedPreviousSurgery.join(", ")}</Typography>
+        </Box>
+      )}
+        <Button
+        variant="contained"
+        color="primary"
+        sx={{ mt: 4 }}
+        onClick={handleSaveAndNavigate}
+      >
+        Save and View Summary
+      </Button>
     </Paper>
   );
 };
 
-export default MedicalHistory;
+const SummaryPage = () => {
+  const [medicalHistoryData, setMedicalHistoryData] = useState(() => {
+    const data = localStorage.getItem('medicalHistory');
+    return data ? JSON.parse(data) : {};
+  });
+
+  const [selectedDiseases, setSelectedDiseases] = useState(() => {
+    const data = localStorage.getItem('selectedDiseases');
+    return data ? JSON.parse(data) : [];
+  });
+
+  const [selectedPreviousSurgery, setSelectedPreviousSurgery] = useState(() => {
+    const data = localStorage.getItem('selectedPreviousSurgery');
+    return data ? JSON.parse(data) : [];
+  });
+
+  const handleUpdate = () => {
+    localStorage.setItem('medicalHistory', JSON.stringify(medicalHistoryData));
+    localStorage.setItem('selectedDiseases', JSON.stringify(selectedDiseases));
+    localStorage.setItem('selectedPreviousSurgery', JSON.stringify(selectedPreviousSurgery));
+    alert('Information updated successfully!');
+  };
+
+  return (
+    <Paper sx={{ padding: '16px', mb: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Medical History Summary
+      </Typography>
+
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h6">Reproductive History</Typography>
+        <Typography>Induced Abortion: {medicalHistoryData.inducedAbortion}</Typography>
+        <Typography>Accidental Miscarriage: {medicalHistoryData.accidentalMiscarriage}</Typography>
+      </Box>
+
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h6">Diseases</Typography>
+        <Typography>{selectedDiseases.join(', ') || 'No diseases selected'}</Typography>
+      </Box>
+
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h6">Previous Surgeries</Typography>
+        <Typography>{selectedPreviousSurgery.join(', ') || 'No surgeries selected'}</Typography>
+      </Box>
+
+      <Button variant="contained" color="primary" onClick={handleUpdate}>
+        Save Updates
+      </Button>
+    </Paper>
+  );
+};
+
+export { MedicalHistory, SummaryPage };
