@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { Person, HealthAndSafety, CalendarToday, LocalDining, Contacts, Settings, Notifications } from '@mui/icons-material';
 import {MedicalHistory} from './MedicalHistory'; 
-import {ShowProfile} from './ShowProfile';// Import the MedicalHistory component
+import {ShowProfile} from './ShowProfile';
+import {DietChart} from './DietChart';// Import the MedicalHistory component
 
 // Sidebar styles
 const Sidebar = {
@@ -104,6 +105,8 @@ const Mother = () => {
 
         {/* Medical History Section */}
         {activeOption === 'medicalHistory' && <MedicalHistory />}
+          {/* Medical History Section */}
+        {activeOption === 'diet' && <DietChart />}
       </Box>
     </Box>
   );
