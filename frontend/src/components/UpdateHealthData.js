@@ -48,6 +48,7 @@ const UpdateHealthData = () => {
       if (response.ok) {
         alert('Health Data updated successfully');
         navigate('/mother');
+       
       } else {
         alert(`Error: ${result.message || 'Something went wrong'}`);
       }
