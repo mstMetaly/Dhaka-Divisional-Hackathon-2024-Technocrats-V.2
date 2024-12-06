@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Paper, Typography, Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const ShowProfile = () => {
+const ShowHealthData = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const ShowProfile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {     
       try {
-        const response = await fetch("http://localhost:5000/api/profile/get", {
+        const response = await fetch("http://localhost:5000/api/health/get", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const ShowProfile = () => {
 
   // Navigate to the update page
   const handleUpdateClick = () => {
-    navigate('/profile');
+    navigate('/updateHealthData');
   };
 
   if (loading) return <CircularProgress />;
@@ -47,24 +47,13 @@ const ShowProfile = () => {
     <div>
       <Paper sx={{ padding: '16px', mb: 3 }}>
         <Typography variant="h5" sx={{ mb: 2 }}>
-          Basic Information
+          Health Information
         </Typography>
-        <Typography><strong>Name:</strong> {profileData.name}</Typography>
-        <Typography><strong>Age:</strong> {profileData.age}</Typography>
-        <Typography><strong>Phone:</strong> {profileData.phone}</Typography>
-        <Typography><strong>Emergency Contact:</strong> {profileData.emergencyContact}</Typography>
+        <Typography><strong>Height:</strong> {profileData.height}</Typography>
+        <Typography><strong>Weight:</strong> {profileData.weight}</Typography>
+        <Typography><strong>Duration:</strong> {profileData.duration}</Typography>
       </Paper>
 
-      <Paper sx={{ padding: '16px', mb: 3 }}>
-        <Typography variant="h5" sx={{ mb: 2 }}>
-          Address Information
-        </Typography>
-        <Typography><strong>Village/Ward:</strong> {profileData.village}</Typography>
-        <Typography><strong>Upazilla:</strong> {profileData.upazilla}</Typography>
-        <Typography><strong>Post Office:</strong> {profileData.postOffice}</Typography>
-        <Typography><strong>District:</strong> {profileData.district}</Typography>
-        <Typography><strong>Division:</strong> {profileData.division}</Typography>
-      </Paper>
 
 
       <Button
@@ -90,4 +79,4 @@ const ShowProfile = () => {
   );
 };
 
-export {ShowProfile};
+export {ShowHealthData};
