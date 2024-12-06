@@ -49,6 +49,7 @@ router.post('/', async (req, res) => {
 
         console.log("sign up er age");
         await newHealthInfo.save();
+        console.log("health info e pushed");
         await newHistory.save();
         await newUser.save();
         await newProfile.save();
