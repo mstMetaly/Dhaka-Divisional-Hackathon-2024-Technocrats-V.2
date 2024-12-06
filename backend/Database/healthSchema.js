@@ -10,24 +10,20 @@ const userHealthInfoSchema = new Schema({
         unique: true
       },
     height: {
-        type: Number,
-        min:0
+        type: Number
       },
     weight: {
-        type: Number,
-        min: 0
-      },
-      age: {
-        type: Number,
-        min: 0
+        type: Number
       },
       duration: {
-        type: Number,
-        min: 0
+        type: Number
+      },
+      healthActivity:{
+        type:String
       }
 
 }, { timestamps: true });
 
-const userHealthInfo = mongoose.model('UserHealthInfo', userHealthInfoSchema);
+const UserHealthInfo = mongoose.model('UserHealthInfo', userHealthInfoSchema);
 
-module.exports = userHealthInfo;
+module.exports = UserHealthInfo;

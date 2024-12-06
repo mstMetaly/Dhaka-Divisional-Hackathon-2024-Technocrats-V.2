@@ -34,25 +34,6 @@ exports.updateProfileInfo = async (req, res) => {
             return res.status(400).json({ success: false, error: 'Phone is required for updating the profile' });
         }
 
-        // // Find the profile and update it
-        // const updatedProfile = await UserProfile.findOneAndUpdate(
-        //     { phone }, // Filter: Find the document with this phone
-        //     {
-        //         $set: {
-        //             name,
-        //             age,
-        //             phone,
-        //             emergencyContact,
-        //             village,
-        //             upazilla,
-        //             postOffice,
-        //             district,
-        //             division
-        //         }
-        //     },
-        //     { new: true, runValidators: true } // Options: Return the updated document and validate the changes
-        // );
-
         //newly added
         // Filter out fields with null values
        // Prepare the updated data by keeping existing values for null/undefined fields

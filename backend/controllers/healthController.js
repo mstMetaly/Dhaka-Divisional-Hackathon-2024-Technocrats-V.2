@@ -1,0 +1,77 @@
+const UserHealthInfo = require('../Database/healthSchema');
+
+exports.getUserHealthInfo = async (req, res) => {
+    //get profile info
+    try{
+        const phone = req.body.phone;
+
+        if(!phone)
+        {
+            return res.status(400).json({success: false, error:'Phone is required'});
+        }
+    
+        const healthInfo = await UserHealthInfo.findOne({phone});
+    
+        if(!healthInfo)
+        {
+            return res.status(404).json({success: false, error:'No user found'});
+        }
+    
+        res.status(200).json({success:true, data:healthInfo});
+    }
+    catch(err)
+    {
+        console.log("error fetching profile info");
+        res.status(500).json({ success: false, error: 'Internal server error for fetching profile info' });
+    }
+   
+};
+
+exports.insertUserHealthInfo = async (req, res) => {
+    //update profile info
+    try {
+        const { phone, height, weight, duration, healthActivity } = req.body;
+
+        if (!phone) {
+            return res.status(400).json({ success: false, error: 'Phone is required for updating the profile' });
+        }
+
+        // Check if the NID is already in use
+        const existingProfile = await UserHealthInfo.findOne({ phone });
+
+        const updatedData = {
+            height: (height !== null && height !== undefined && height != '') ? height : existingProfile.height,
+            weight: (weight !== null && weight !== undefined && weight != '') ? weight : existingProfile.weight,
+            duration: (duration !== null && duration !== undefined && duration != '') ? duration : existingProfile.duration,
+            healthActivity: (healthActivity !== null && healthActivity != undefined && healthActivity !== '') ? healthActivity : existingProfile.healthActivity,
+        };
+
+    
+        console.log("here updated health: ", updatedData);
+    
+        // Update the profile with the prepared data
+        const updatedHealthInfo = await UserHealthInfo.findOneAndUpdate(
+            { phone }, // Filter: Find the document with this phone
+            { $set: updatedData }, // Update only non-null/undefined fields
+            { new: true, runValidators: true } // Options: Return the updated document and validate the changes
+        );
+
+        if (!updatedHealthInfo) {
+            return res.status(404).json({ success: false, error: 'No user found with the given phone number' });
+        }
+
+        console.log("updated health:", updatedHealthInfo);
+
+        return res.status(200).json({
+            message: 'User health info added successfully',
+            data: updatedHealthInfo,
+        });
+
+    } catch (error) {
+        console.error('Error adding user health info:', error);
+        return res.status(500).json({
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
