@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Paper, Typography, TextField, Button, FormControl,FormLabel,FormControlLabel,RadioGroup,Radio } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const DietChart = () => {
+const HealthData = () => {
   const [formData, setFormData] = useState({
     phone: '',
     height: '',
@@ -126,4 +126,4 @@ const DietChart = () => {
   );
 };
 
-export {DietChart};
+export {HealthData};

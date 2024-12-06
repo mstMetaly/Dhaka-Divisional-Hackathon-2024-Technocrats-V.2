@@ -4,7 +4,8 @@ import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { Person, HealthAndSafety, CalendarToday, LocalDining, Contacts, Settings, Notifications } from '@mui/icons-material';
 import {MedicalHistory} from './MedicalHistory'; 
 import {ShowProfile} from './ShowProfile';
-import {DietChart} from './DietChart';// Import the MedicalHistory component
+import {DietChart} from './DietChart';
+import {HealthData} from './HealthData';// Import the MedicalHistory component
 
 // Sidebar styles
 const Sidebar = {
@@ -64,6 +65,10 @@ const Mother = () => {
             <HealthAndSafety sx={{ marginRight: '10px' }} />
             <ListItemText primary="Risk Analysis" />
           </ListItem>
+          <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('healthData')}>
+            <CalendarToday sx={{ marginRight: '10px' }} />
+            <ListItemText primary="Health Data" />
+          </ListItem>
           <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('schedule')}>
             <CalendarToday sx={{ marginRight: '10px' }} />
             <ListItemText primary="Vaccination Schedule" />
@@ -92,6 +97,7 @@ const Mother = () => {
         <Typography variant="h4" sx={MainTitle}>
           {activeOption === 'profile' ? 'Your Profile' :
             activeOption === 'medicalHistory' ? 'Medical History' : 
+            activeOption === 'healthData'? 'Health Data' :
             activeOption === 'risk' ? 'Risk Analysis' :
             activeOption === 'schedule' ? 'Vaccination Schedule' :
             activeOption === 'diet' ? 'Diet Chart' :
@@ -107,6 +113,7 @@ const Mother = () => {
         {activeOption === 'medicalHistory' && <MedicalHistory />}
           {/* Medical History Section */}
         {activeOption === 'diet' && <DietChart />}
+        {activeOption === 'healthData' && <HealthData />}
       </Box>
     </Box>
   );
