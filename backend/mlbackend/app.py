@@ -1,14 +1,23 @@
-from fastapi import FastAPI, HTTPException 
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pickle
 import warnings
-import uvicorn
 
 # Load the models
 maternal_model = pickle.load(open("model/finalized_maternal_model.sav", 'rb'))
 fetal_model = pickle.load(open("model/fetal_health_classifier.sav", 'rb'))
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace "*" with specific origins for better security (e.g., ["http://localhost:3000"])
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Request models
 class PregnancyRiskInput(BaseModel):
@@ -107,6 +116,3 @@ def predict_fetal_health(input_data: FetalHealthInput):
 def dashboard_placeholder():
     # This is a placeholder for the dashboard feature.
     return {"message": "Dashboard endpoint is under development."}
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)

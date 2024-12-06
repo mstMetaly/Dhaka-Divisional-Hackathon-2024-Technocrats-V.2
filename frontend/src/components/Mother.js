@@ -6,7 +6,8 @@ import {MedicalHistory} from './MedicalHistory';
 import {ShowProfile} from './ShowProfile';
 import {DietChart} from './DietChart';
 import {UpdateHealthData} from './UpdateHealthData';
-import {ShowHealthData} from './HealthData'// Import the MedicalHistory component
+import {ShowHealthData} from './HealthData'
+import {RiskAnalysis} from './RiskAnalysis'// Import the MedicalHistory component
 
 // Sidebar styles
 const Sidebar = {
@@ -62,7 +63,7 @@ const Mother = () => {
             <HealthAndSafety sx={{ marginRight: '10px' }} />
             <ListItemText primary="Medical History" />
           </ListItem>
-          <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('risk')}>
+          <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('riskAnalysis')}>
             <HealthAndSafety sx={{ marginRight: '10px' }} />
             <ListItemText primary="Risk Analysis" />
           </ListItem>
@@ -104,7 +105,7 @@ const Mother = () => {
             activeOption === 'medicalHistory' ? 'Medical History' : 
             activeOption === 'showHealthData'? 'Show Health Data' :
             activeOption === 'healthData'? 'Update Health Data' :
-            activeOption === 'risk' ? 'Risk Analysis' :
+            activeOption === 'riskAnalysis' ? 'Risk Analysis' :
             activeOption === 'schedule' ? 'Vaccination Schedule' :
             activeOption === 'diet' ? 'Diet Chart' :
             activeOption === 'contacts' ? 'Emergency Contacts' :
@@ -121,6 +122,7 @@ const Mother = () => {
         {activeOption === 'diet' && <DietChart />}
         {activeOption === 'healthData' && <UpdateHealthData />}
         {activeOption === 'showHealthData' && <ShowHealthData />}
+        {activeOption === 'riskAnalysis' && <RiskAnalysis />}
       </Box>
     </Box>
   );

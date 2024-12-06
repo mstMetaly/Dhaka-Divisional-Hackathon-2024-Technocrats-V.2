@@ -52,7 +52,7 @@ const DietChart = () => {
 
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', margin: '20px' }}>
-      <h1>Pregnancy Nutrition Calculator</h1>
+      <h1>Nutrition Calculator</h1>
       {nutrition && (
         <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '5px' }}>
           <h2>Nutrition Requirements</h2>
