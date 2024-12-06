@@ -46,8 +46,8 @@ exports.insertUserHealthInfo = async (req, res) => {
             healthActivity: (healthActivity !== null && healthActivity != undefined && healthActivity !== '') ? healthActivity : existingProfile.healthActivity,
         };
 
-    
         console.log("here updated health: ", updatedData);
+        console.log("here updated health: ", updatedData.healthActivity);
     
         // Update the profile with the prepared data
         const updatedHealthInfo = await UserHealthInfo.findOneAndUpdate(
