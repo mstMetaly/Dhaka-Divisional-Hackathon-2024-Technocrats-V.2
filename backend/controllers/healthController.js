@@ -16,6 +16,7 @@ exports.getUserHealthInfo = async (req, res) => {
         {
             return res.status(404).json({success: false, error:'No user found'});
         }
+        console.log("Ami weoe" + healthInfo);
     
         res.status(200).json({success:true, data:healthInfo});
     }
@@ -55,6 +56,7 @@ exports.insertUserHealthInfo = async (req, res) => {
             { $set: updatedData }, // Update only non-null/undefined fields
             { new: true, runValidators: true } // Options: Return the updated document and validate the changes
         );
+        console.log("Ami weee" + updatedHealthInfo);
 
         if (!updatedHealthInfo) {
             return res.status(404).json({ success: false, error: 'No user found with the given phone number' });

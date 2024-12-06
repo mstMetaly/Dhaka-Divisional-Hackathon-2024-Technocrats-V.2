@@ -5,7 +5,8 @@ import { Person, HealthAndSafety, CalendarToday, LocalDining, Contacts, Settings
 import {MedicalHistory} from './MedicalHistory'; 
 import {ShowProfile} from './ShowProfile';
 import {DietChart} from './DietChart';
-import {HealthData} from './HealthData';// Import the MedicalHistory component
+import {UpdateHealthData} from './UpdateHealthData';
+import {ShowHealthData} from './HealthData'// Import the MedicalHistory component
 
 // Sidebar styles
 const Sidebar = {
@@ -65,9 +66,13 @@ const Mother = () => {
             <HealthAndSafety sx={{ marginRight: '10px' }} />
             <ListItemText primary="Risk Analysis" />
           </ListItem>
-          <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('healthData')}>
+          <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('showHealthData')}>
             <CalendarToday sx={{ marginRight: '10px' }} />
             <ListItemText primary="Health Data" />
+          </ListItem>
+          <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('healthData')}>
+            <CalendarToday sx={{ marginRight: '10px' }} />
+            <ListItemText primary=" Update Health Data" />
           </ListItem>
           <ListItem button sx={SidebarItem} onClick={() => handleOptionClick('schedule')}>
             <CalendarToday sx={{ marginRight: '10px' }} />
@@ -97,7 +102,8 @@ const Mother = () => {
         <Typography variant="h4" sx={MainTitle}>
           {activeOption === 'profile' ? 'Your Profile' :
             activeOption === 'medicalHistory' ? 'Medical History' : 
-            activeOption === 'healthData'? 'Health Data' :
+            activeOption === 'showHealthData'? 'Show Health Data' :
+            activeOption === 'healthData'? 'Update Health Data' :
             activeOption === 'risk' ? 'Risk Analysis' :
             activeOption === 'schedule' ? 'Vaccination Schedule' :
             activeOption === 'diet' ? 'Diet Chart' :
@@ -113,7 +119,8 @@ const Mother = () => {
         {activeOption === 'medicalHistory' && <MedicalHistory />}
           {/* Medical History Section */}
         {activeOption === 'diet' && <DietChart />}
-        {activeOption === 'healthData' && <HealthData />}
+        {activeOption === 'healthData' && <UpdateHealthData />}
+        {activeOption === 'showHealthData' && <ShowHealthData />}
       </Box>
     </Box>
   );

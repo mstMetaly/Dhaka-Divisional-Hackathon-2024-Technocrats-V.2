@@ -34,6 +34,7 @@ const ShowProfile = () => {
     fetchProfileData();
   }, []);
 
+
   // Navigate to the update page
   const handleUpdateClick = () => {
     navigate('/profile');
@@ -65,15 +66,6 @@ const ShowProfile = () => {
         <Typography><strong>Division:</strong> {profileData.division}</Typography>
       </Paper>
 
-      <Paper sx={{ padding: '16px', mb: 3 }}>
-        <Typography variant="h5" sx={{ mb: 2 }}>
-          Health Information
-        </Typography>
-        <Typography><strong>Height(cms):</strong> {profileData.height}</Typography>
-        <Typography><strong>Weight(kg):</strong> {profileData.weight}</Typography>
-        <Typography><strong>Duration(wks):</strong> {profileData.duration}</Typography>
-        <Typography><strong>Activity:</strong> {profileData.activity}</Typography>
-      </Paper>
 
       <Button
         variant="contained"

@@ -7,6 +7,8 @@ import Profile from './components/Profile';
 import {ShowProfile} from './components/ShowProfile';
 import OfficialPersonnel from './components/OfficialPersonnel';
 import Login from './components/Login'; // Add this import
+import { UpdateHealthData } from './components/UpdateHealthData';
+import { ShowHealthData } from './components/HealthData';
 
 function App() {
   return (
@@ -23,6 +25,9 @@ function App() {
           <Route path="/official-personnel" element={<OfficialPersonnel />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/ShowProfile" element={<ShowProfile />} />
+          <Route path="/updateHealthData" element={<UpdateHealthData />} />
+          <Route path="/healthData" element={<ShowHealthData />} />
+          
 
           {/* Add a default welcome page */}
           <Route path="/" element={<h1>Welcome to the Rural Pregnancy App</h1>} />

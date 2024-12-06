@@ -10,9 +10,11 @@ app.use(express.json());
 
 // Route to calculate nutrition
 app.post('/calculate-nutrition', async (req, res) => {
-  const { height, weight, age, duration } = req.body;
+  const { height, weight,duration } = req.body.data;
+  console.log("here in cal:", req.body);
 
-  if (!height || !weight || !age || !duration) {
+  if (!height || !weight || !duration) {
+    console.log("here in 400", height, weight,duration);
     return res.status(400).json({ error: 'All fields are required' });
   }
 
@@ -23,7 +25,7 @@ app.post('/calculate-nutrition', async (req, res) => {
             params: {
               measurement_units: 'met',
               sex: 'female', 
-              age_value: age,
+              age_value: 20,
               age_type: 'yrs',
               cm:height,
               kilos:weight,
@@ -44,7 +46,8 @@ app.post('/calculate-nutrition', async (req, res) => {
           protein: macronutrientsTable.find(row => row[0] === 'Protein')?.[1] || 'Data not available',
           fat: macronutrientsTable.find(row => row[0] === 'Fat')?.[1] || 'Data not available',
         };
-    
+        
+        console.log("res:",macronutrients);
         res.json(macronutrients);
 }    
 
