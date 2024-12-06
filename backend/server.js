@@ -14,6 +14,7 @@ const loginRouter = require('./routes/loginRouter');
 const healthDataRouter = require('./routes/healthDataRouter');
 const profileRouter = require('./routes/profileRouter');
 const historyRouter = require('./routes/medicalHistoryRouter');
+const emergencyRouter = require('./routes/emergencyRouter');
 
 
 
@@ -39,6 +40,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/health', healthDataRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/history', historyRouter);
+app.use('/api/emergency', emergencyRouter);
 
 
 

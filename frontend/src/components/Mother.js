@@ -8,6 +8,8 @@ import {DietChart} from './DietChart';
 import {UpdateHealthData} from './UpdateHealthData';
 import {ShowHealthData} from './HealthData'
 import {RiskAnalysis} from './RiskAnalysis'// Import the MedicalHistory component
+import {ShowHealthData} from './HealthData'// Import the MedicalHistory component
+import {Emergency} from './Emergency'// Import the MedicalHistory component
 
 // Sidebar styles
 const Sidebar = {
@@ -108,7 +110,7 @@ const Mother = () => {
             activeOption === 'riskAnalysis' ? 'Risk Analysis' :
             activeOption === 'schedule' ? 'Vaccination Schedule' :
             activeOption === 'diet' ? 'Diet Chart' :
-            activeOption === 'contacts' ? 'Emergency Contacts' :
+            activeOption === 'contacts' ? 'Emergency' :
             activeOption === 'settings' ? 'Settings' :
             activeOption === 'notifications' ? 'Notifications' : 'Mother Profile'}
         </Typography>
@@ -123,6 +125,7 @@ const Mother = () => {
         {activeOption === 'healthData' && <UpdateHealthData />}
         {activeOption === 'showHealthData' && <ShowHealthData />}
         {activeOption === 'riskAnalysis' && <RiskAnalysis />}
+        {activeOption === 'contacts' && <Emergency />}
       </Box>
     </Box>
   );
