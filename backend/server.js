@@ -11,7 +11,7 @@ const connectDB = require('./Database/database');
 //import routes
 const signupRouter = require('./routes/signupRouter');
 const loginRouter = require('./routes/loginRouter');
-const dietRouter = require('./routes/dietRouter');
+const healthDataRouter = require('./routes/healthDataRouter');
 const profileRouter = require('./routes/profileRouter');
 const historyRouter = require('./routes/medicalHistoryRouter');
 
@@ -36,7 +36,7 @@ connectDB();
 //routes setup
 app.use('/api/signup', signupRouter);
 app.use('/api/login', loginRouter);
-app.use('/api/diet', dietRouter);
+app.use('/api/health', healthDataRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/history', historyRouter);
 
