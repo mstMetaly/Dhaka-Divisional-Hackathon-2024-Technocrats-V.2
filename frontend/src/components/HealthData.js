@@ -52,6 +52,10 @@ const ShowHealthData = () => {
         <Typography><strong>Height:</strong> {profileData.height}</Typography>
         <Typography><strong>Weight:</strong> {profileData.weight}</Typography>
         <Typography><strong>Duration:</strong> {profileData.duration}</Typography>
+        <Typography><strong>Diastolic BP:</strong> {profileData.diastolicBP}</Typography>
+        <Typography><strong>Blood Sugar:</strong> {profileData.blood_sugar}</Typography>
+        <Typography><strong>Body Temperature:</strong> {profileData.body_temp}</Typography>
+        <Typography><strong>Heart Rate</strong> {profileData.heart_rate}</Typography>
       </Paper>
 
 

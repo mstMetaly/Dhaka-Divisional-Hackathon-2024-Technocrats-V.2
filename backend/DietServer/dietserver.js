@@ -45,6 +45,13 @@ app.post('/calculate-nutrition', async (req, res) => {
           carbohydrate: macronutrientsTable.find(row => row[0] === 'Carbohydrate')?.[1] || 'Data not available',
           protein: macronutrientsTable.find(row => row[0] === 'Protein')?.[1] || 'Data not available',
           fat: macronutrientsTable.find(row => row[0] === 'Fat')?.[1] || 'Data not available',
+          total_fiber: macronutrientsTable.find(row => row[0] === 'Total Fiber')?.[1] || 'Data not available',
+          saturated_fatty_acids: macronutrientsTable.find(row => row[0] === 'Saturated fatty acids')?.[1] || 'Data not available',
+          transfatty_acids: macronutrientsTable.find(row => row[0] === 'Transfatty acids')?.[1] || 'Data not available',
+          α_linolenic_acid: macronutrientsTable.find(row => row[0] === 'α-Linolenic Acid')?.[1] || 'Data not available',
+          linoleic_acid: macronutrientsTable.find(row => row[0] === 'Linoleic Acid')?.[1] || 'Data not available',
+          dietary_cholesterol: macronutrientsTable.find(row => row[0] === 'Dietary Cholesterol')?.[1] || 'Data not available',
+          total_water: macronutrientsTable.find(row => row[0] === 'Total Water')?.[1] || 'Data not available'
         };
         
         console.log("res:",macronutrients);

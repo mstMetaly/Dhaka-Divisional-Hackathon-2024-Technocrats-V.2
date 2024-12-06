@@ -59,7 +59,11 @@ const DietChart = () => {
           <p>Carbohydrate: {nutrition.carbohydrate}</p>
           <p>Protein: {nutrition.protein}</p>
           <p>Fat: {nutrition.fat}</p>
-          <p>Minerals: {nutrition.minerals}</p>
+          <p>Fiber: {nutrition.total_fiber}</p>
+          <p>Saturated Fatty Acid: {nutrition.saturated_fatty_acids}</p>
+          <p>Trans Fatty Acid: {nutrition.transfatty_acids}</p>
+          <p>Dietary Cholesterol : {nutrition.dietary_cholesterol}</p>
+          <p>Water : {nutrition.total_water}</p>
         </div>
       )}
     </div>
