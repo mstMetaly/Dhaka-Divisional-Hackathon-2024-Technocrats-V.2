@@ -18,8 +18,17 @@ const userHealthInfoSchema = new Schema({
       duration: {
         type: Number
       },
-      healthActivity:{
-        type:String
+      diastolicBP:{
+        type:Number
+      },
+      blood_sugar:{
+        type:Number
+      },
+      body_temp:{
+        type:Number
+      },
+      heart_rate:{
+        type:Number
       }
 
 }, { timestamps: true });
